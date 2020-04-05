@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import SlideshowItem from './SlideshowItem';
+import SlideshowItem from './SlideshowItem.vue';
 
 @Component({
     components: {
@@ -24,15 +24,12 @@ import SlideshowItem from './SlideshowItem';
 export default class Slideshow extends Vue {
     private index = 0;
     private timer: any;
-    private items: any;
-    private slides: SlideshowItem[] = [];
+    private slides: any = [];
 
     @Prop({ default: 5000 }) rate!: number;
 
     mounted() {
-        this.items = this.$el.querySelectorAll('.slideshow-item');
         this.slides = this.$children;
-        // this.items[0].classList.add('slideshow--active');
         this.setComponentInterval();
     }
 
@@ -47,22 +44,20 @@ export default class Slideshow extends Vue {
 
     activateIndex(itemIndex: number) {
         this.resetInterval();
-        // this.items[itemIndex].classList.add('slideshow--active');
         this.slides[itemIndex].active = true;
     }
 
     deactivateIndex(itemIndex: number) {
         this.resetInterval();
         this.slides[itemIndex].active = false;
-        // this.items[itemIndex].classList.remove('slideshow--active');
     }
 
     select(event: number) {
         this.deactivateIndex(this.index);
         this.index += event;
         if (event === -1 && this.index === -1) {
-            this.index = this.items.length - 1;
-        } else if (event === 1 && this.index === this.items.length) {
+            this.index = this.slides.length - 1;
+        } else if (event === 1 && this.index === this.slides.length) {
             this.index = 0;
         }
         this.activateIndex(this.index);

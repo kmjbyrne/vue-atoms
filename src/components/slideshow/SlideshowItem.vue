@@ -13,13 +13,13 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 
 @Component
-export default class Splash extends Vue {
+export default class SlideshowItem extends Vue {
     @Prop({ default: '' }) image!: string;
     public active = false;
 
     @Watch('active')
     activeChanged() {
-        console.log(this.active);
+        // console.log(this.active);
     }
 }
 </script>
